@@ -1,11 +1,15 @@
+using Serilog;
 using TaskManagement.Api.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.AddLoggerConfiguration();
 builder.AddApplicationServices();
 builder.AddInfraStructureServices();
 
 var app = builder.Build();
+
+app.UseSerilogRequestLogging();
 
 if (app.Environment.IsDevelopment())
 {
