@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TaskManagement.Api.Extensions;
-using TaskManagement.Api.Requests.Task;
 using TaskManagement.Application.Interfaces;
+using TaskManagement.Application.Requests.Task;
 using TaskManagement.Domain.Entities.Task;
 
 namespace TaskManagement.Api.Controllers
@@ -27,15 +27,7 @@ namespace TaskManagement.Api.Controllers
         [HttpPost("Create")]
         public async Task<ActionResult<TaskEntity>> Create([FromBody] CreateTaskRequest task)
         {
-            var taskEntity = new TaskEntity
-            {
-                Title = task.Titulo!,
-                Description = task.Descricao,
-                DueDate = task.DataVencimento,
-                Status = task.Status!
-            };
-
-            var result = await service.CreateTask(taskEntity);
+            var result = await service.CreateTask(task);
             if (!result.IsSuccess)
                 return ResultExtensions.ToActionResult(result);
 
@@ -62,16 +54,7 @@ namespace TaskManagement.Api.Controllers
         [HttpPut("Update")]
         public async Task<ActionResult<TaskEntity>> Update([FromBody] UpdateTaskRequest task)
         {
-            var taskEntity = new TaskEntity
-            {
-                Id = task.Id,
-                Title = task.Titulo!,
-                Description = task.Descricao,
-                DueDate = task.DataVencimento,
-                Status = task.Status!
-            };
-
-            var result = await service.UpdateTask(taskEntity);
+            var result = await service.UpdateTask(task);
             return ResultExtensions.ToActionResult(result);
         }
     }

@@ -1,4 +1,5 @@
 ﻿using TaskManagement.Application.Interfaces;
+using TaskManagement.Application.Requests.Task;
 using TaskManagement.Domain.Entities.Task;
 using TaskManagement.Domain.Interfaces;
 using TaskManagement.Domain.Result;
@@ -16,13 +17,21 @@ namespace TaskManagement.Application.Services
             this.validator = validator;
         }
 
-        public async Task<Result<TaskResponse>> CreateTask(TaskEntity task)
+        public async Task<Result<TaskResponse>> CreateTask(CreateTaskRequest task)
         {
-            var validationResult = validator.Validate(task);
+            var taskEntity = new TaskEntity
+            {
+                Title = task.Titulo!,
+                Description = task.Descricao,
+                DueDate = task.DataVencimento,
+                Status = task.Status!
+            };
+
+            var validationResult = validator.Validate(taskEntity);
             if (!validationResult.IsSuccess)
                 return Result<TaskResponse>.Failure<TaskResponse>(validationResult.Error);
 
-            var result = await repository.Add(task);
+            var result = await repository.Add(taskEntity);
 
             if (!result.IsSuccess)
                 return Result<TaskResponse>.Failure<TaskResponse>(result.Error);
@@ -106,19 +115,27 @@ namespace TaskManagement.Application.Services
             return Result<IEnumerable<TaskResponse>>.Success<IEnumerable<TaskResponse>>(responseList);
         }
 
-        public async Task<Result<TaskResponse>> UpdateTask(TaskEntity task)
+        public async Task<Result<TaskResponse>> UpdateTask(UpdateTaskRequest task)
         {
+            var taskEntity = new TaskEntity
+            {
+                Title = task.Titulo!,
+                Description = task.Descricao,
+                DueDate = task.DataVencimento,
+                Status = task.Status!
+            };
+
             var getTask = await GetTask(task.Id);
             if (!getTask.IsSuccess)
                 return Result<TaskResponse>.Failure<TaskResponse>(getTask.Error);
             if (getTask.Data == null)
                 return Result<TaskResponse>.Failure<TaskResponse>(TaskErrors.NotFound());
 
-            var validationResult = validator.Validate(task);
+            var validationResult = validator.Validate(taskEntity);
             if (!validationResult.IsSuccess)
                 return Result<TaskResponse>.Failure<TaskResponse>(validationResult.Error);
 
-            var result = await repository.Update(task);
+            var result = await repository.Update(taskEntity);
             if (!result.IsSuccess)
                 return Result<TaskResponse>.Failure<TaskResponse>(result.Error);
 
