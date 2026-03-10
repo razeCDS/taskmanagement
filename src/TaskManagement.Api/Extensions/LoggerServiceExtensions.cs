@@ -9,7 +9,7 @@ namespace TaskManagement.Api.Extensions
             builder.Host.UseSerilog((context, config) =>
             {
                 config.ReadFrom.Configuration(context.Configuration)
-                      .MinimumLevel.Debug()
+                      .MinimumLevel.Information()
                       .WriteTo.Console();
             });
 
