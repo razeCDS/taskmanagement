@@ -1,10 +1,17 @@
-﻿using TaskManagement.Domain.Enum;
+﻿using Swashbuckle.AspNetCore.Annotations;
+using System.Text.Json.Serialization;
+using TaskManagement.Domain.Enum;
 
 namespace TaskManagement.Domain.Result
 {
+    [SwaggerSchema("Representa um erro na aplicação")]
     public class Error
     {
+        [SwaggerSchema("Mensagem descritiva do erro")]
         public string Message { get; }
+
+        [SwaggerSchema("Tipo do erro (0-None, 1-NotFound, 2-Validation, 3-Unexpected)")]
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public ErrorType Type { get; }
 
         public Error(string message, ErrorType type)

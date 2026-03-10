@@ -3,6 +3,7 @@ using TaskManagement.Api.Extensions;
 using TaskManagement.Application.Interfaces;
 using TaskManagement.Application.Requests.Task;
 using TaskManagement.Domain.Entities.Task;
+using TaskManagement.Domain.Result;
 
 namespace TaskManagement.Api.Controllers
 {
@@ -19,6 +20,9 @@ namespace TaskManagement.Api.Controllers
 
         [HttpGet("{id}")]
         [EndpointSummary("Obtém a task pelo id.")]
+        [ProducesResponseType(typeof(Result<TaskResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<TaskResponse>> Get(int id)
         {
             var result = await service.GetTask(id);
@@ -27,6 +31,10 @@ namespace TaskManagement.Api.Controllers
 
         [HttpPost("Create")]
         [EndpointSummary("Cria uma nova Task.")]
+        [ProducesResponseType(typeof(Result<TaskResponse>), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<TaskResponse>> Create([FromBody] TaskRequest task)
         {
             var result = await service.CreateTask(task);
@@ -38,7 +46,11 @@ namespace TaskManagement.Api.Controllers
 
         [HttpDelete("{id}")]
         [EndpointSummary("Deleta uma task.")]
-        public async Task<ActionResult<TaskResponse>> Delete(int id)
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> Delete(int id)
         {
             var result = await service.DeleteTask(id);
             if (!result.IsSuccess)
@@ -49,6 +61,9 @@ namespace TaskManagement.Api.Controllers
 
         [HttpGet("List")]
         [EndpointSummary("Realiza a listagem de tasks, por filtro de status e data.")]
+        [ProducesResponseType(typeof(Result<List<TaskResponse>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<TaskResponse>> List([FromQuery] string? status, [FromQuery] DateTime? dataVencimento)
         {
             var result = await service.ListTask(status, dataVencimento);
@@ -57,6 +72,10 @@ namespace TaskManagement.Api.Controllers
 
         [HttpPut("{id}")]
         [EndpointSummary("Realiza a atualização de uma task.")]
+        [ProducesResponseType(typeof(Result<TaskResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Result), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<TaskResponse>> Update(int id, [FromBody] TaskRequest task)
         {
             var result = await service.UpdateTask(id, task);
