@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManagement.Domain", "sr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManagement.Infrastructure", "src\TaskManagement.Infrastructure\TaskManagement.Infrastructure.csproj", "{7100FFA0-C44B-2047-35D1-38F39C57D005}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{385C082F-C1F1-44A9-B0A9-9E4F08A4AE18}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{12D7E5E8-4E69-4122-8BD2-07CA16CFFCDD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +40,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8FA78BBD-4077-49E5-9E86-E147AA0DA15D} = {385C082F-C1F1-44A9-B0A9-9E4F08A4AE18}
+		{B4CDE7A2-FFA6-3E3A-1A77-776589C98A7E} = {385C082F-C1F1-44A9-B0A9-9E4F08A4AE18}
+		{8D681FA5-75F5-EC05-274C-EC7CABE4A8A5} = {385C082F-C1F1-44A9-B0A9-9E4F08A4AE18}
+		{7100FFA0-C44B-2047-35D1-38F39C57D005} = {385C082F-C1F1-44A9-B0A9-9E4F08A4AE18}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {56A91FCE-050A-43A6-A578-37DD9B5F9BB2}
