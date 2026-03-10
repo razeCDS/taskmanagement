@@ -20,7 +20,7 @@ namespace TaskManagement.Api.Extensions
                         Email = "cezar.cds71@gmail.com"
                     }
                 });
-            }); 
+            });
 
             return services;
         }

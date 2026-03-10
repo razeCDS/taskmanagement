@@ -18,6 +18,7 @@ namespace TaskManagement.Api.Controllers
         }
 
         [HttpGet("{id}")]
+        [EndpointSummary("Obtém a task pelo id.")]
         public async Task<ActionResult<TaskResponse>> Get(int id)
         {
             var result = await service.GetTask(id);
@@ -25,7 +26,8 @@ namespace TaskManagement.Api.Controllers
         }
 
         [HttpPost("Create")]
-        public async Task<ActionResult<TaskResponse>> Create([FromBody] CreateTaskRequest task)
+        [EndpointSummary("Cria uma nova Task.")]
+        public async Task<ActionResult<TaskResponse>> Create([FromBody] TaskRequest task)
         {
             var result = await service.CreateTask(task);
             if (!result.IsSuccess)
@@ -35,6 +37,7 @@ namespace TaskManagement.Api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [EndpointSummary("Deleta uma task.")]
         public async Task<ActionResult<TaskResponse>> Delete(int id)
         {
             var result = await service.DeleteTask(id);
@@ -45,6 +48,7 @@ namespace TaskManagement.Api.Controllers
         }
 
         [HttpGet("List")]
+        [EndpointSummary("Realiza a listagem de tasks, por filtro de status e data.")]
         public async Task<ActionResult<TaskResponse>> List([FromQuery] string? status, [FromQuery] DateTime? dataVencimento)
         {
             var result = await service.ListTask(status, dataVencimento);
@@ -52,7 +56,8 @@ namespace TaskManagement.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<TaskResponse>> Update(int id, [FromBody] UpdateTaskRequest task)
+        [EndpointSummary("Realiza a atualização de uma task.")]
+        public async Task<ActionResult<TaskResponse>> Update(int id, [FromBody] TaskRequest task)
         {
             var result = await service.UpdateTask(id, task);
             return ResultExtensions.ToActionResult(result);

@@ -18,7 +18,7 @@ namespace TaskManagement.Application.Services
             this.validator = validator;
         }
 
-        public async Task<Result<TaskResponse>> CreateTask(CreateTaskRequest task)
+        public async Task<Result<TaskResponse>> CreateTask(TaskRequest task)
         {
             var validationResult = validator.Validate(task);
             if (!validationResult.IsSuccess)
@@ -77,7 +77,7 @@ namespace TaskManagement.Application.Services
             return Result.Success(responseList);
         }
 
-        public async Task<Result<TaskResponse>> UpdateTask(int id, UpdateTaskRequest task)
+        public async Task<Result<TaskResponse>> UpdateTask(int id, TaskRequest task)
         {
             var validationResult = validator.Validate(task);
             if (!validationResult.IsSuccess)
