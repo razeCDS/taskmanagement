@@ -18,9 +18,7 @@ namespace TaskManagement.Infrastructure.Extensions
         public static IServiceCollection AddDatabaseConfiguration(this IServiceCollection services)
         {
             services.AddScoped<ITaskRepository, TaskRepository>();
-
             services.AddDbContext<TaskDbContext>(opt => opt.UseInMemoryDatabase("TaskDB"));
-          
             return services;
         }
     }

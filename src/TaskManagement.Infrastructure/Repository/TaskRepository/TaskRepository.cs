@@ -59,5 +59,18 @@ namespace TaskManagement.Infrastructure.Repository.TaskRepository
                 return Result<TaskEntity>.Failure<TaskEntity>(TaskErrors.Unexpected(e.Message));
             }
         }
+
+        public Task<Result<IQueryable<TaskEntity>>> List(string? status, DateTime? dueDate)
+        {
+            try
+            {   
+                var result = context.Task.Where(t => (status == null || t.Status.ToString() == status) && (dueDate == null || t.DueDate <= dueDate));
+                return Task.FromResult(Result<IQueryable<TaskEntity>>.Success(result));
+            }
+            catch(Exception e)
+            {
+                return Task.FromResult(Result<IQueryable<TaskEntity>>.Failure<IQueryable<TaskEntity>>(TaskErrors.Unexpected(e.Message)));
+            }
+        }
     }
 }

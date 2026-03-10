@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using TaskManagement.Domain.Enum;
 
 namespace TaskManagement.Domain.Entities.Task
 {

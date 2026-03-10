@@ -14,9 +14,7 @@ namespace TaskManagement.Domain.Result
         }
 
         public static Error None => new(string.Empty, ErrorType.None);
-
         public static Error NotFound(string message) => new(message, ErrorType.NotFound);
-
         public static Error Validation(string message) => new(message, ErrorType.Validation);
         public static Error Unexpected(string message) => new(message, ErrorType.Unexpected);
 

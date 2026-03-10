@@ -15,6 +15,7 @@ namespace TaskManagement.Api.Extensions
             {
                 ErrorType.NotFound => new NotFoundObjectResult(result),
                 ErrorType.Validation => new BadRequestObjectResult(result),
+                ErrorType.Unexpected => new ObjectResult(result) { StatusCode = 500 },
                 _ => new ObjectResult(result) { StatusCode = 500 }
             };
         }

@@ -7,5 +7,6 @@ namespace TaskManagement.Domain.Entities.Task
     {
         public static Error NotFound() => new("Task.NotFound", ErrorType.NotFound);
         public static Error Unexpected(string message) => new(message, ErrorType.Unexpected);
+        public static Error Validation(string message) => new(message, ErrorType.Validation);
     }
 }

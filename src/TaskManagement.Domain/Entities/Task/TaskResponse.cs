@@ -1,4 +1,6 @@
-﻿namespace TaskManagement.Domain.Entities.Task
+﻿using TaskManagement.Domain.Enum;
+
+namespace TaskManagement.Domain.Entities.Task
 {
     public class TaskResponse
     {

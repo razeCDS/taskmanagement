@@ -1,4 +1,5 @@
-﻿using TaskManagement.Application.Extensions;
+﻿using System.Text.Json.Serialization;
+using TaskManagement.Application.Extensions;
 using TaskManagement.Infrastructure.Extensions;
 
 namespace TaskManagement.Api.Extensions
@@ -12,8 +13,8 @@ namespace TaskManagement.Api.Extensions
 
             services.AddControllers();
             services.AddSwaggerConfiguration();
-
             services.AddApplicationConfiguration();
+
             return builder;
         }
 
@@ -23,6 +24,7 @@ namespace TaskManagement.Api.Extensions
             var configuration = builder.Configuration;
 
             services.AddInfrastructureConfiguration();
+
             return builder;
         }
     }

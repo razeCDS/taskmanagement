@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TaskManagement.Api.Extensions;
 using TaskManagement.Api.Requests.Task;
-using TaskManagement.Application.Services.TaskService;
+using TaskManagement.Application.Interfaces;
 using TaskManagement.Domain.Entities.Task;
 
 namespace TaskManagement.Api.Controllers
@@ -29,17 +29,17 @@ namespace TaskManagement.Api.Controllers
         {
             var taskEntity = new TaskEntity
             {
-                Title = task.Titulo,
+                Title = task.Titulo!,
                 Description = task.Descricao,
                 DueDate = task.DataVencimento,
-                Status = task.Status
+                Status = task.Status!
             };
 
             var result = await service.CreateTask(taskEntity);
             if (!result.IsSuccess)
                 return ResultExtensions.ToActionResult(result);
 
-            return CreatedAtAction(nameof(Get), new { id = result.Data!.Id }, result);
+            return CreatedAtAction(nameof(Create), new { id = result.Data!.Id }, result);
         }
 
         [HttpDelete("Delete")]
@@ -49,7 +49,14 @@ namespace TaskManagement.Api.Controllers
             if (!result.IsSuccess)
                 return ResultExtensions.ToActionResult(result);
 
-            return CreatedAtAction(nameof(Get), new { id = result.Data!.Id }, result);
+            return NoContent();
+        }
+
+        [HttpGet("List")]
+        public async Task<ActionResult<TaskEntity>> List([FromQuery] string status, [FromQuery] DateTime dueDate)
+        {
+            var result = await service.ListTask(status, dueDate);
+            return ResultExtensions.ToActionResult(result);
         }
     }
 }
