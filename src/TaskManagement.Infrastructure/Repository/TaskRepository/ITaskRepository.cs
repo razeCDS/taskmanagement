@@ -9,6 +9,6 @@ namespace TaskManagement.Domain.Interfaces
         Task<Result<TaskEntity>> Delete(int id);
         Task<Result<TaskEntity>> Get(int id);
         Task<Result<IEnumerable<TaskEntity>>> List(string? status, DateTime? dueDate);
-        Task<Result<TaskEntity>> Update(TaskEntity taskEntity);
+        Task<Result<TaskEntity>> Update(int id, TaskEntity taskEntity);
     }
 }

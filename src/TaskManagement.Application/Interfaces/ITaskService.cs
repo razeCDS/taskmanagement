@@ -10,6 +10,6 @@ namespace TaskManagement.Application.Interfaces
         Task<Result<TaskResponse>> GetTask(int id);
         Task<Result<TaskResponse>> DeleteTask(int id);
         Task<Result<IEnumerable<TaskResponse>>> ListTask(string? status, DateTime? dueDate);
-        Task<Result<TaskResponse>> UpdateTask(UpdateTaskRequest task);
+        Task<Result<TaskResponse>> UpdateTask(int id, UpdateTaskRequest task);
     }
 }

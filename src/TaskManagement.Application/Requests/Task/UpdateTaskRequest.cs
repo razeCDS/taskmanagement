@@ -2,6 +2,5 @@
 {
     public class UpdateTaskRequest : TaskRequest
     {
-        public int Id { get; set; }
     }
 }

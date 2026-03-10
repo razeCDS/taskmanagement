@@ -20,20 +20,19 @@ namespace TaskManagement.Application.Services
 
         public async Task<Result<TaskResponse>> CreateTask(CreateTaskRequest task)
         {
-            var taskEntity = TaskMapper.MapToEntity(task);
-
-            var validationResult = validator.Validate(taskEntity);
+            var validationResult = validator.Validate(task);
             if (!validationResult.IsSuccess)
-                return Result<TaskResponse>.Failure<TaskResponse>(validationResult.Error);
+                return Result.Failure<TaskResponse>(validationResult.Error);
 
+            var taskEntity = TaskMapper.MapToEntity(task);
             var result = await repository.Add(taskEntity);
 
             if (!result.IsSuccess)
-                return Result<TaskResponse>.Failure<TaskResponse>(result.Error);
+                return Result.Failure<TaskResponse>(result.Error);
 
             var response = TaskMapper.MapToResponse(result.Data!);
 
-            return Result<TaskResponse>.Success(response);
+            return Result.Success(response);
         }
 
         public async Task<Result<TaskResponse>> DeleteTask(int id)
@@ -41,13 +40,13 @@ namespace TaskManagement.Application.Services
             var result = await repository.Delete(id);
 
             if (!result.IsSuccess)
-                return Result<TaskResponse>.Failure<TaskResponse>(result.Error);
+                return Result.Failure<TaskResponse>(result.Error);
             if (result.Data == null)
-                return Result<TaskResponse>.Failure<TaskResponse>(TaskErrors.NotFound());
+                return Result.Failure<TaskResponse>(TaskErrors.NotFound());
 
             var response = TaskMapper.MapToResponse(result.Data!);
 
-            return Result<TaskResponse>.Success(response);
+            return Result.Success(response);
         }
 
         public async Task<Result<TaskResponse>> GetTask(int id)
@@ -55,13 +54,13 @@ namespace TaskManagement.Application.Services
             var result = await repository.Get(id);
 
             if (!result.IsSuccess)
-                return Result<TaskResponse>.Failure<TaskResponse>(result.Error);
+                return  Result.Failure<TaskResponse>(result.Error);
             if (result.Data == null)
-                return Result<TaskResponse>.Failure<TaskResponse>(TaskErrors.NotFound());
+                return Result.Failure<TaskResponse>(TaskErrors.NotFound());
 
             var response = TaskMapper.MapToResponse(result.Data!);
 
-            return Result<TaskResponse>.Success(response);
+            return Result.Success(response);
         }
 
         public async Task<Result<IEnumerable<TaskResponse>>> ListTask(string? status, DateTime? dueDate)
@@ -69,36 +68,37 @@ namespace TaskManagement.Application.Services
             var result = await repository.List(status, dueDate);
 
             if (!result.IsSuccess)
-                return Result<IEnumerable<TaskResponse>>.Failure<IEnumerable<TaskResponse>>(result.Error);
+                return Result.Failure<IEnumerable<TaskResponse>>(result.Error);
             if (!result.Data!.Any())
-                return Result<IEnumerable<TaskResponse>>.Failure<IEnumerable<TaskResponse>>(TaskErrors.NotFound());
+                return Result.Failure<IEnumerable<TaskResponse>>(TaskErrors.NotFound());
 
 
             var responseList = result.Data!.Select(task => TaskMapper.MapToResponse(task));
-            return Result<IEnumerable<TaskResponse>>.Success(responseList);
+            return Result.Success(responseList);
         }
 
-        public async Task<Result<TaskResponse>> UpdateTask(UpdateTaskRequest task)
+        public async Task<Result<TaskResponse>> UpdateTask(int id, UpdateTaskRequest task)
         {
+            var validationResult = validator.Validate(task);
+            if (!validationResult.IsSuccess)
+                return Result.Failure<TaskResponse>(validationResult.Error);
+
             var taskEntity = TaskMapper.MapToEntity(task);
 
-            var getTask = await GetTask(task.Id);
+            var getTask = await GetTask(id);
             if (!getTask.IsSuccess)
-                return Result<TaskResponse>.Failure<TaskResponse>(getTask.Error);
+                return Result.Failure<TaskResponse>(getTask.Error);
             if (getTask.Data == null)
-                return Result<TaskResponse>.Failure<TaskResponse>(TaskErrors.NotFound());
+                return Result.Failure<TaskResponse>(TaskErrors.NotFound());
 
-            var validationResult = validator.Validate(taskEntity);
-            if (!validationResult.IsSuccess)
-                return Result<TaskResponse>.Failure<TaskResponse>(validationResult.Error);
 
-            var result = await repository.Update(taskEntity);
+            var result = await repository.Update(id, taskEntity);
             if (!result.IsSuccess)
-                return Result<TaskResponse>.Failure<TaskResponse>(result.Error);
+                return Result.Failure<TaskResponse>(result.Error);
 
             var response = TaskMapper.MapToResponse(result.Data!);
 
-            return Result<TaskResponse>.Success<TaskResponse>(response);
+            return Result.Success(response);
         }
     }
 }

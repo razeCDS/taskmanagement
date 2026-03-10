@@ -6,22 +6,10 @@ namespace TaskManagement.Application.Mappings
 {
     public static class TaskMapper
     {
-        public static TaskEntity MapToEntity(CreateTaskRequest request)
+        public static TaskEntity MapToEntity(TaskRequest request)
         {
             return new TaskEntity
             {
-                Title = request.Titulo!,
-                Description = request.Descricao!,
-                DueDate = request.DataVencimento!.Value,
-                Status = request.Status!
-            };
-        }
-
-        public static TaskEntity MapToEntity(UpdateTaskRequest request)
-        {
-            return new TaskEntity
-            {
-                Id = request.Id,
                 Title = request.Titulo!,
                 Description = request.Descricao!,
                 DueDate = request.DataVencimento!.Value,

@@ -17,8 +17,8 @@ namespace TaskManagement.Api.Controllers
             this.service = service;
         }
 
-        [HttpGet("Get")]
-        public async Task<ActionResult<TaskResponse>> Get([FromQuery] int id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<TaskResponse>> Get(int id)
         {
             var result = await service.GetTask(id);
             return ResultExtensions.ToActionResult(result);
@@ -34,8 +34,8 @@ namespace TaskManagement.Api.Controllers
             return CreatedAtAction(nameof(Create), new { id = result.Data!.Id }, result);
         }
 
-        [HttpDelete("Delete")]
-        public async Task<ActionResult<TaskResponse>> Delete([FromQuery] int id)
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<TaskResponse>> Delete(int id)
         {
             var result = await service.DeleteTask(id);
             if (!result.IsSuccess)
@@ -51,10 +51,10 @@ namespace TaskManagement.Api.Controllers
             return ResultExtensions.ToActionResult(result);
         }
 
-        [HttpPut("Update")]
-        public async Task<ActionResult<TaskResponse>> Update([FromBody] UpdateTaskRequest task)
+        [HttpPut("{id}")]
+        public async Task<ActionResult<TaskResponse>> Update(int id, [FromBody] UpdateTaskRequest task)
         {
-            var result = await service.UpdateTask(task);
+            var result = await service.UpdateTask(id, task);
             return ResultExtensions.ToActionResult(result);
         }
     }

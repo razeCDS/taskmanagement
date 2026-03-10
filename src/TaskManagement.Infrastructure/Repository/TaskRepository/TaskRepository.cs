@@ -73,11 +73,11 @@ namespace TaskManagement.Infrastructure.Repository.TaskRepository
             }
         }
 
-        public async Task<Result<TaskEntity>> Update(TaskEntity taskEntity)
+        public async Task<Result<TaskEntity>> Update(int id, TaskEntity taskEntity)
         {
             try
             {
-                var task = await context.Task.AsNoTracking().Where(t => t.Id == taskEntity.Id).FirstOrDefaultAsync();
+                var task = await context.Task.AsNoTracking().Where(t => t.Id == id).FirstOrDefaultAsync();
                 if (task == null)
                     return Result<TaskEntity>.Failure<TaskEntity>(TaskErrors.NotFound());
 
