@@ -1,4 +1,4 @@
-﻿namespace TaskManagement.Shared.Result
+﻿namespace TaskManagement.Domain.Result
 {
     public class Result
     {

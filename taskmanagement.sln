@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManagement.Domain", "sr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManagement.Infrastructure", "src\TaskManagement.Infrastructure\TaskManagement.Infrastructure.csproj", "{7100FFA0-C44B-2047-35D1-38F39C57D005}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManagement.Shared", "src\TaskManagement.Shared\TaskManagement.Shared.csproj", "{C30E1376-26A7-4699-A720-5E6B1998727C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,10 +33,6 @@ Global
 		{7100FFA0-C44B-2047-35D1-38F39C57D005}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7100FFA0-C44B-2047-35D1-38F39C57D005}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7100FFA0-C44B-2047-35D1-38F39C57D005}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C30E1376-26A7-4699-A720-5E6B1998727C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C30E1376-26A7-4699-A720-5E6B1998727C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C30E1376-26A7-4699-A720-5E6B1998727C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C30E1376-26A7-4699-A720-5E6B1998727C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
