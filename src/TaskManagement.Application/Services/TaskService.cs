@@ -1,4 +1,5 @@
-﻿using TaskManagement.Application.Interfaces;
+﻿using AutoMapper;
+using TaskManagement.Application.Interfaces;
 using TaskManagement.Application.Requests.Task;
 using TaskManagement.Domain.Entities.Task;
 using TaskManagement.Domain.Interfaces;
@@ -10,22 +11,18 @@ namespace TaskManagement.Application.Services
     {
         private readonly ITaskRepository repository;
         private readonly ITaskValidator validator;
+        private readonly IMapper mapper;
 
-        public TaskService(ITaskRepository repository, ITaskValidator validator)
+        public TaskService(ITaskRepository repository, ITaskValidator validator, IMapper mapper)
         {
             this.repository = repository;
             this.validator = validator;
+            this.mapper = mapper;
         }
 
         public async Task<Result<TaskResponse>> CreateTask(CreateTaskRequest task)
         {
-            var taskEntity = new TaskEntity
-            {
-                Title = task.Titulo!,
-                Description = task.Descricao,
-                DueDate = task.DataVencimento,
-                Status = task.Status!
-            };
+            var taskEntity = mapper.Map<TaskEntity>(task);
 
             var validationResult = validator.Validate(taskEntity);
             if (!validationResult.IsSuccess)
@@ -36,14 +33,7 @@ namespace TaskManagement.Application.Services
             if (!result.IsSuccess)
                 return Result<TaskResponse>.Failure<TaskResponse>(result.Error);
 
-            var response = new TaskResponse
-            {
-                Id = result.Data!.Id,
-                Titulo = result.Data.Title,
-                Descricao = result.Data.Description,
-                DataVencimento = result.Data.DueDate,
-                Status = result.Data.Status
-            };
+            var response = mapper.Map<TaskResponse>(result.Data);
 
             return Result<TaskEntity>.Success(response);
         }
@@ -57,14 +47,7 @@ namespace TaskManagement.Application.Services
             if (result.Data == null)
                 return Result<TaskResponse>.Failure<TaskResponse>(TaskErrors.NotFound());
 
-            var response = new TaskResponse
-            {
-                Id = result.Data.Id,
-                Titulo = result.Data.Title,
-                Descricao = result.Data.Description,
-                DataVencimento = result.Data.DueDate,
-                Status = result.Data.Status
-            };
+            var response = mapper.Map<TaskResponse>(result.Data);
 
             return Result<TaskResponse>.Success(response);
         }
@@ -101,29 +84,14 @@ namespace TaskManagement.Application.Services
 
             var responseList = new List<TaskResponse>();
             foreach (var task in result.Data!)
-            {
-                responseList.Add(new TaskResponse
-                {
-                    Id = task.Id,
-                    Titulo = task.Title,
-                    Descricao = task.Description,
-                    DataVencimento = task.DueDate,
-                    Status = task.Status
-                });
-            }
+                responseList.Add(mapper.Map<TaskResponse>(task));
 
             return Result<IEnumerable<TaskResponse>>.Success<IEnumerable<TaskResponse>>(responseList);
         }
 
         public async Task<Result<TaskResponse>> UpdateTask(UpdateTaskRequest task)
         {
-            var taskEntity = new TaskEntity
-            {
-                Title = task.Titulo!,
-                Description = task.Descricao,
-                DueDate = task.DataVencimento,
-                Status = task.Status!
-            };
+            var taskEntity = mapper.Map<TaskEntity>(task);
 
             var getTask = await GetTask(task.Id);
             if (!getTask.IsSuccess)
@@ -139,14 +107,7 @@ namespace TaskManagement.Application.Services
             if (!result.IsSuccess)
                 return Result<TaskResponse>.Failure<TaskResponse>(result.Error);
 
-            var response = new TaskResponse
-            {
-                Id = result.Data!.Id,
-                Titulo = result.Data.Title,
-                Descricao = result.Data.Description,
-                DataVencimento = result.Data.DueDate,
-                Status = result.Data.Status
-            };
+            var response = mapper.Map<TaskResponse>(result.Data);
 
             return Result<TaskResponse>.Success<TaskResponse>(response);
         }
