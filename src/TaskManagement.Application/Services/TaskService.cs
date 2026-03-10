@@ -91,7 +91,6 @@ namespace TaskManagement.Application.Services
             if (getTask.Data == null)
                 return Result.Failure<TaskResponse>(TaskErrors.NotFound());
 
-
             var result = await repository.Update(id, taskEntity);
             if (!result.IsSuccess)
                 return Result.Failure<TaskResponse>(result.Error);

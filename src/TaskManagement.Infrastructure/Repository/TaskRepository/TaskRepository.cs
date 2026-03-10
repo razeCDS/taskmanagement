@@ -81,6 +81,7 @@ namespace TaskManagement.Infrastructure.Repository.TaskRepository
                 if (task == null)
                     return Result<TaskEntity>.Failure<TaskEntity>(TaskErrors.NotFound());
 
+                taskEntity.Id = id;
                 var result = context.Task.Update(taskEntity);
                 await context.SaveChangesAsync();
                 return Result<TaskEntity>.Success(result.Entity);
