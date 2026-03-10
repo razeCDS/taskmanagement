@@ -106,9 +106,19 @@ namespace TaskManagement.Application.Services
             return Result<IEnumerable<TaskResponse>>.Success<IEnumerable<TaskResponse>>(responseList);
         }
 
-        public async Task<Result<TaskResponse>> UpdateTask(TaskEntity taskEntity)
+        public async Task<Result<TaskResponse>> UpdateTask(TaskEntity task)
         {
-            var result = await repository.Update(taskEntity);
+            var getTask = await GetTask(task.Id);
+            if (!getTask.IsSuccess)
+                return Result<TaskResponse>.Failure<TaskResponse>(getTask.Error);
+            if (getTask.Data == null)
+                return Result<TaskResponse>.Failure<TaskResponse>(TaskErrors.NotFound());
+
+            var validationResult = validator.Validate(task);
+            if (!validationResult.IsSuccess)
+                return Result<TaskResponse>.Failure<TaskResponse>(validationResult.Error);
+
+            var result = await repository.Update(task);
             if (!result.IsSuccess)
                 return Result<TaskResponse>.Failure<TaskResponse>(result.Error);
 
