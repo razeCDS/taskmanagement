@@ -8,7 +8,7 @@ namespace TaskManagement.Application.Validator
 {
     public class TaskValidator : ITaskValidator
     {
-        public Result<TaskRequest> Validate(TaskRequest task)
+        public Result Validate(TaskRequest task)
         {
             if (string.IsNullOrWhiteSpace(task.Titulo))
                 return Result.Failure<TaskRequest>(TaskErrors.Validation("Título é obrigatório."));
@@ -16,7 +16,7 @@ namespace TaskManagement.Application.Validator
             if (!Enum.TryParse<TaskStatusEnum>(task.Status, true, out var status))
                 return Result.Failure<TaskRequest>(TaskErrors.Validation("Status inválido."));
 
-            return Result<TaskEntity>.Success<TaskRequest>(task);
+            return Result.Success();
         }
     }
 }

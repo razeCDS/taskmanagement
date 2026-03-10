@@ -6,6 +6,6 @@ namespace TaskManagement.Application.Interfaces
 {
     public interface ITaskValidator
     {
-        Result<TaskRequest> Validate(TaskRequest task);
+        Result Validate(TaskRequest task);
     }
 }
