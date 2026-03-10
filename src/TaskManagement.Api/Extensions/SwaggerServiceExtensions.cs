@@ -9,6 +9,7 @@ namespace TaskManagement.Api.Extensions
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen(setup =>
             {
+                setup.EnableAnnotations();
                 setup.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
