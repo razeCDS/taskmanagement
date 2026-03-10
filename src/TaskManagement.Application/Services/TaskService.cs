@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using TaskManagement.Application.Interfaces;
+﻿using TaskManagement.Application.Interfaces;
+using TaskManagement.Application.Mappings;
 using TaskManagement.Application.Requests.Task;
 using TaskManagement.Domain.Entities.Task;
 using TaskManagement.Domain.Interfaces;
@@ -11,18 +11,16 @@ namespace TaskManagement.Application.Services
     {
         private readonly ITaskRepository repository;
         private readonly ITaskValidator validator;
-        private readonly IMapper mapper;
 
-        public TaskService(ITaskRepository repository, ITaskValidator validator, IMapper mapper)
+        public TaskService(ITaskRepository repository, ITaskValidator validator)
         {
             this.repository = repository;
             this.validator = validator;
-            this.mapper = mapper;
         }
 
         public async Task<Result<TaskResponse>> CreateTask(CreateTaskRequest task)
         {
-            var taskEntity = mapper.Map<TaskEntity>(task);
+            var taskEntity = TaskMapper.MapToEntity(task);
 
             var validationResult = validator.Validate(taskEntity);
             if (!validationResult.IsSuccess)
@@ -33,9 +31,9 @@ namespace TaskManagement.Application.Services
             if (!result.IsSuccess)
                 return Result<TaskResponse>.Failure<TaskResponse>(result.Error);
 
-            var response = mapper.Map<TaskResponse>(result.Data);
+            var response = TaskMapper.MapToResponse(result.Data!);
 
-            return Result<TaskEntity>.Success(response);
+            return Result<TaskResponse>.Success(response);
         }
 
         public async Task<Result<TaskResponse>> DeleteTask(int id)
@@ -47,7 +45,7 @@ namespace TaskManagement.Application.Services
             if (result.Data == null)
                 return Result<TaskResponse>.Failure<TaskResponse>(TaskErrors.NotFound());
 
-            var response = mapper.Map<TaskResponse>(result.Data);
+            var response = TaskMapper.MapToResponse(result.Data!);
 
             return Result<TaskResponse>.Success(response);
         }
@@ -61,14 +59,7 @@ namespace TaskManagement.Application.Services
             if (result.Data == null)
                 return Result<TaskResponse>.Failure<TaskResponse>(TaskErrors.NotFound());
 
-            var response = new TaskResponse
-            {
-                Id = result.Data.Id,
-                Titulo = result.Data.Title,
-                Descricao = result.Data.Description,
-                DataVencimento = result.Data.DueDate,
-                Status = result.Data.Status
-            };
+            var response = TaskMapper.MapToResponse(result.Data!);
 
             return Result<TaskResponse>.Success(response);
         }
@@ -82,16 +73,14 @@ namespace TaskManagement.Application.Services
             if (!result.Data!.Any())
                 return Result<IEnumerable<TaskResponse>>.Failure<IEnumerable<TaskResponse>>(TaskErrors.NotFound());
 
-            var responseList = new List<TaskResponse>();
-            foreach (var task in result.Data!)
-                responseList.Add(mapper.Map<TaskResponse>(task));
 
-            return Result<IEnumerable<TaskResponse>>.Success<IEnumerable<TaskResponse>>(responseList);
+            var responseList = result.Data!.Select(task => TaskMapper.MapToResponse(task));
+            return Result<IEnumerable<TaskResponse>>.Success(responseList);
         }
 
         public async Task<Result<TaskResponse>> UpdateTask(UpdateTaskRequest task)
         {
-            var taskEntity = mapper.Map<TaskEntity>(task);
+            var taskEntity = TaskMapper.MapToEntity(task);
 
             var getTask = await GetTask(task.Id);
             if (!getTask.IsSuccess)
@@ -107,7 +96,7 @@ namespace TaskManagement.Application.Services
             if (!result.IsSuccess)
                 return Result<TaskResponse>.Failure<TaskResponse>(result.Error);
 
-            var response = mapper.Map<TaskResponse>(result.Data);
+            var response = TaskMapper.MapToResponse(result.Data!);
 
             return Result<TaskResponse>.Success<TaskResponse>(response);
         }
