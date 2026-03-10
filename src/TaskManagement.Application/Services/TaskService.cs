@@ -81,7 +81,7 @@ namespace TaskManagement.Application.Services
             return Result<TaskResponse>.Success(response);
         }
 
-        public async Task<Result<IEnumerable<TaskResponse>>> ListTask(string status, DateTime dueDate)
+        public async Task<Result<IEnumerable<TaskResponse>>> ListTask(string? status, DateTime? dueDate)
         {
             var result = await repository.List(status, dueDate);
 
@@ -104,6 +104,24 @@ namespace TaskManagement.Application.Services
             }
 
             return Result<IEnumerable<TaskResponse>>.Success<IEnumerable<TaskResponse>>(responseList);
+        }
+
+        public async Task<Result<TaskResponse>> UpdateTask(TaskEntity taskEntity)
+        {
+            var result = await repository.Update(taskEntity);
+            if (!result.IsSuccess)
+                return Result<TaskResponse>.Failure<TaskResponse>(result.Error);
+
+            var response = new TaskResponse
+            {
+                Id = result.Data!.Id,
+                Titulo = result.Data.Title,
+                Descricao = result.Data.Description,
+                DataVencimento = result.Data.DueDate,
+                Status = result.Data.Status
+            };
+
+            return Result<TaskResponse>.Success<TaskResponse>(response);
         }
     }
 }

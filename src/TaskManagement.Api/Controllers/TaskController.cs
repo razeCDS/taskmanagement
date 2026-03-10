@@ -53,9 +53,25 @@ namespace TaskManagement.Api.Controllers
         }
 
         [HttpGet("List")]
-        public async Task<ActionResult<TaskEntity>> List([FromQuery] string status, [FromQuery] DateTime dueDate)
+        public async Task<ActionResult<TaskEntity>> List([FromQuery] string? status, [FromQuery] DateTime? dataVencimento)
         {
-            var result = await service.ListTask(status, dueDate);
+            var result = await service.ListTask(status, dataVencimento);
+            return ResultExtensions.ToActionResult(result);
+        }
+
+        [HttpPut("Update")]
+        public async Task<ActionResult<TaskEntity>> Update([FromBody] UpdateTaskRequest task)
+        {
+            var taskEntity = new TaskEntity
+            {
+                Id = task.Id,
+                Title = task.Titulo!,
+                Description = task.Descricao,
+                DueDate = task.DataVencimento,
+                Status = task.Status!
+            };
+
+            var result = await service.UpdateTask(taskEntity);
             return ResultExtensions.ToActionResult(result);
         }
     }

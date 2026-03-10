@@ -8,6 +8,7 @@ namespace TaskManagement.Domain.Interfaces
         Task<Result<TaskEntity>> Add(TaskEntity task);
         Task<Result<TaskEntity>> Delete(int id);
         Task<Result<TaskEntity>> Get(int id);
-        Task<Result<IQueryable<TaskEntity>>> List(string? status, DateTime? dueDate);
+        Task<Result<IEnumerable<TaskEntity>>> List(string? status, DateTime? dueDate);
+        Task<Result<TaskEntity>> Update(TaskEntity taskEntity);
     }
 }

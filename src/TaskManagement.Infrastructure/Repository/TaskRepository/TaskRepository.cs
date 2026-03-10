@@ -33,7 +33,7 @@ namespace TaskManagement.Infrastructure.Repository.TaskRepository
         {
             try
             {
-                var task = await context.Task.Where(t => t.Id == id).FirstOrDefaultAsync();
+                var task = await context.Task.AsNoTracking().Where(t => t.Id == id).FirstOrDefaultAsync();
                 if (task == null)
                     return Result<TaskEntity>.Failure<TaskEntity>(TaskErrors.NotFound());
                 
@@ -51,7 +51,7 @@ namespace TaskManagement.Infrastructure.Repository.TaskRepository
         {
             try
             {
-                var result = await context.Task.Where(a => a.Id == id).FirstOrDefaultAsync();
+                var result = await context.Task.AsNoTracking().Where(a => a.Id == id).FirstOrDefaultAsync();
                 return Result<TaskEntity>.Success(result!);
             }
             catch (Exception e)
@@ -60,16 +60,35 @@ namespace TaskManagement.Infrastructure.Repository.TaskRepository
             }
         }
 
-        public Task<Result<IQueryable<TaskEntity>>> List(string? status, DateTime? dueDate)
+        public async Task<Result<IEnumerable<TaskEntity>>> List(string? status, DateTime? dueDate)
         {
             try
-            {   
-                var result = context.Task.Where(t => (status == null || t.Status.ToString() == status) && (dueDate == null || t.DueDate <= dueDate));
-                return Task.FromResult(Result<IQueryable<TaskEntity>>.Success(result));
+            {
+                var result = await context.Task.AsNoTracking().Where(t => (status == null || t.Status == status) && (!dueDate.HasValue || t.DueDate <= dueDate)).ToListAsync();
+                return Result<IEnumerable<TaskEntity>>.Success<IEnumerable<TaskEntity>>(result);
             }
             catch(Exception e)
             {
-                return Task.FromResult(Result<IQueryable<TaskEntity>>.Failure<IQueryable<TaskEntity>>(TaskErrors.Unexpected(e.Message)));
+                return Result<IEnumerable<TaskEntity>>.Failure<IEnumerable<TaskEntity>>(TaskErrors.Unexpected(e.Message));
+            }
+        }
+
+        public async Task<Result<TaskEntity>> Update(TaskEntity taskEntity)
+        {
+            try
+            {
+                var task = await context.Task.AsNoTracking().Where(t => t.Id == taskEntity.Id).FirstOrDefaultAsync();
+                if (task == null)
+                    return Result<TaskEntity>.Failure<TaskEntity>(TaskErrors.NotFound());
+
+                var result = context.Task.Update(taskEntity);
+                await context.SaveChangesAsync();
+                return Result<TaskEntity>.Success(result.Entity);
+
+            }
+            catch (Exception e) 
+            {
+                return Result<TaskEntity>.Failure<TaskEntity>(TaskErrors.Unexpected(e.Message));
             }
         }
     }
