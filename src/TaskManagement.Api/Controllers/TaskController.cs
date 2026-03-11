@@ -61,7 +61,7 @@ namespace TaskManagement.Api.Controllers
 
         [HttpGet("list")]
         [EndpointSummary("Realiza a listagem de tasks, por filtro de status e data.")]
-        [ProducesResponseType(typeof(Result<List<TaskResponse>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Result<IEnumerable<TaskResponse>>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Result), StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<TaskResponse>> List([FromQuery] string? status, [FromQuery] DateTime? dataVencimento, [FromQuery] int? page, [FromQuery] int? pageSize)
