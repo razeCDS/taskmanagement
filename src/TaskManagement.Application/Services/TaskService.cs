@@ -106,7 +106,7 @@ namespace TaskManagement.Application.Services
                 return Result.Failure<IEnumerable<TaskResponse>>(result.Error);
             }
 
-            if (!result.Data!.Any())
+            if (result.Data == null || !result.Data.Any())
             {
                 logger.LogInformation("Nenhuma tarefa encontrada para os filtros informados.");
                 return Result.Failure<IEnumerable<TaskResponse>>(TaskErrors.NotFound());
