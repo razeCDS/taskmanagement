@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using TaskManagement.Domain.Interfaces;
 using TaskManagement.Infrastructure.Context;
-using TaskManagement.Infrastructure.Repository.TaskRepository;
+using TaskManagement.Infrastructure.Repository;
 
 namespace TaskManagement.Infrastructure.Extensions
 {
