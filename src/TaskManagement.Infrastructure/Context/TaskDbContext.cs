@@ -10,6 +10,6 @@ namespace TaskManagement.Infrastructure.Context
             
         }
 
-        public DbSet<TaskEntity> Task { get; set; }
+        public virtual DbSet<TaskEntity> Task { get; set; }
     }
 }
