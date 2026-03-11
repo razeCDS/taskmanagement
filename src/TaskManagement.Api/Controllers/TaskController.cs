@@ -35,9 +35,9 @@ namespace TaskManagement.Api.Controllers
         [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(Result), StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<TaskResponse>> Create([FromBody] TaskRequest task)
+        public async Task<ActionResult<TaskResponse>> Create([FromBody] TaskRequest request)
         {
-            var result = await service.CreateTask(task);
+            var result = await service.CreateTask(request);
             if (!result.IsSuccess)
                 return ResultExtensions.ToActionResult(result);
 
@@ -76,9 +76,9 @@ namespace TaskManagement.Api.Controllers
         [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(Result), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(Result), StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<TaskResponse>> Update(int id, [FromBody] TaskRequest task)
+        public async Task<ActionResult<TaskResponse>> Update(int id, [FromBody] TaskRequest request)
         {
-            var result = await service.UpdateTask(id, task);
+            var result = await service.UpdateTask(id, request);
             return ResultExtensions.ToActionResult(result);
         }
     }
