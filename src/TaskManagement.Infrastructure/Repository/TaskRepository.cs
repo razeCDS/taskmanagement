@@ -90,15 +90,19 @@ namespace TaskManagement.Infrastructure.Repository
             }
         }
 
-        public async Task<Result<IEnumerable<TaskEntity>>> List(string? status, DateTime? dueDate)
+        public async Task<Result<IEnumerable<TaskEntity>>> List(string? status, DateTime? dueDate, int? page, int? pageSize)
         {
             try
             {
                 logger.LogInformation("Listando tarefas. Status: {Status}, DueDate: {DueDate}", status, dueDate);
+                int pageNumber = page ?? 1;
+                int pageSizeNumber = pageSize ?? 10;
 
                 var result = await context.Task.AsNoTracking()
                     .Where(t => (status == null || t.Status == status) &&
                                 (!dueDate.HasValue || t.DueDate <= dueDate))
+                    .Skip((pageNumber - 1) * (pageSizeNumber))
+                    .Take(pageSizeNumber)
                     .ToListAsync();
 
                 logger.LogInformation("Consulta de tarefas executada. Quantidade encontrada: {Count}", result.Count);

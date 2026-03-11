@@ -64,9 +64,9 @@ namespace TaskManagement.Api.Controllers
         [ProducesResponseType(typeof(Result<List<TaskResponse>>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Result), StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<TaskResponse>> List([FromQuery] string? status, [FromQuery] DateTime? dataVencimento)
+        public async Task<ActionResult<TaskResponse>> List([FromQuery] string? status, [FromQuery] DateTime? dataVencimento, [FromQuery] int? page, [FromQuery] int? pageSize)
         {
-            var result = await service.ListTask(status, dataVencimento);
+            var result = await service.ListTask(status, dataVencimento, page, pageSize);
             return ResultExtensions.ToActionResult(result);
         }
 

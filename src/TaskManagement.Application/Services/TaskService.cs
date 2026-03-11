@@ -95,12 +95,11 @@ namespace TaskManagement.Application.Services
             return Result.Success(response);
         }
 
-        public async Task<Result<IEnumerable<TaskResponse>>> ListTask(string? status, DateTime? dueDate)
+        public async Task<Result<IEnumerable<TaskResponse>>> ListTask(string? status, DateTime? dueDate, int? page, int? pageSize)
         {
             logger.LogInformation("Listando tarefas. Status: {Status}, DueDate: {DueDate}", status, dueDate);
 
-            var result = await repository.List(status, dueDate);
-
+            var result = await repository.List(status, dueDate, page, pageSize);
             if (!result.IsSuccess)
             {
                 logger.LogError("Erro ao listar tarefas. Status: {Status}, DueDate: {DueDate}", status, dueDate);
