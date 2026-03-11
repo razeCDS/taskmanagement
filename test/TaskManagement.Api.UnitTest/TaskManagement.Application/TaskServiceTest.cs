@@ -430,18 +430,18 @@ namespace TaskManagement.Api.UnitTest.TaskManagement.Application
 
             var repositoryResult = Result.Success<IEnumerable<TaskEntity>>(tasks);
 
-            _mockRepository.Setup(r => r.List(status, dueDate))
+            _mockRepository.Setup(r => r.List(status, dueDate, 0, 0))
                 .Returns(Task.FromResult(repositoryResult));
 
             // Act
-            var result = await _taskService.ListTask(status, dueDate);
+            var result = await _taskService.ListTask(status, dueDate, 0, 0);
 
             // Assert
             Assert.True(result.IsSuccess);
             Assert.NotNull(result.Data);
             Assert.Equal(2, result.Data.Count());
 
-            _mockRepository.Verify(r => r.List(status, dueDate), Times.Once);
+            _mockRepository.Verify(r => r.List(status, dueDate, 0, 0), Times.Once);
         }
 
         [Fact]
@@ -454,17 +454,17 @@ namespace TaskManagement.Api.UnitTest.TaskManagement.Application
             var tasks = new List<TaskEntity>();
             var repositoryResult = Result.Success<IEnumerable<TaskEntity>>(tasks);
 
-            _mockRepository.Setup(r => r.List(status, dueDate))
+            _mockRepository.Setup(r => r.List(status, dueDate,0 ,0))
                 .Returns(Task.FromResult(repositoryResult));
 
             // Act
-            var result = await _taskService.ListTask(status, dueDate);
+            var result = await _taskService.ListTask(status, dueDate, 0, 0);
 
             // Assert
             Assert.False(result.IsSuccess);
             Assert.Equal(ErrorType.NotFound, result.Error.Type);
 
-            _mockRepository.Verify(r => r.List(status, dueDate), Times.Once);
+            _mockRepository.Verify(r => r.List(status, dueDate, 0, 0), Times.Once);
         }
 
         [Fact]
@@ -476,17 +476,17 @@ namespace TaskManagement.Api.UnitTest.TaskManagement.Application
 
             var repositoryResult = Result.Failure<IEnumerable<TaskEntity>>("Erro ao listar");
 
-            _mockRepository.Setup(r => r.List(status, dueDate))
+            _mockRepository.Setup(r => r.List(status, dueDate, 0, 0))
                 .Returns(Task.FromResult(repositoryResult));
 
             // Act
-            var result = await _taskService.ListTask(status, dueDate);
+            var result = await _taskService.ListTask(status, dueDate, 0, 0);
 
             // Assert
             Assert.False(result.IsSuccess);
             Assert.Equal("Erro ao listar", result.Error.Message);
 
-            _mockRepository.Verify(r => r.List(status, dueDate), Times.Once);
+            _mockRepository.Verify(r => r.List(status, dueDate, 0, 0), Times.Once);
         }
 
         [Fact]
@@ -505,18 +505,18 @@ namespace TaskManagement.Api.UnitTest.TaskManagement.Application
 
             var repositoryResult = Result.Success<IEnumerable<TaskEntity>>(tasks);
 
-            _mockRepository.Setup(r => r.List(status, dueDate))
+            _mockRepository.Setup(r => r.List(status, dueDate, 0, 0))
                 .Returns(Task.FromResult(repositoryResult));
 
             // Act
-            var result = await _taskService.ListTask(status, dueDate);
+            var result = await _taskService.ListTask(status, dueDate, 0, 0);
 
             // Assert
             Assert.True(result.IsSuccess);
             Assert.NotNull(result.Data);
             Assert.Equal(3, result.Data.Count());
 
-            _mockRepository.Verify(r => r.List(status, dueDate), Times.Once);
+            _mockRepository.Verify(r => r.List(status, dueDate, 0, 0), Times.Once);
         }
 
         #endregion

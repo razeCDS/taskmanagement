@@ -11,8 +11,8 @@ namespace TaskManagement.Application.Mappings
             return new TaskEntity
             {
                 Title = request.Titulo!,
-                Description = request.Descricao!,
-                DueDate = request.DataVencimento!.Value,
+                Description = request.Descricao,
+                DueDate = request.DataVencimento,
                 Status = request.Status!
             };
         }
