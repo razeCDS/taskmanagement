@@ -79,7 +79,7 @@ Base route: `api/Task`
 
 1. Criar tarefa
 - Metodo: `POST`
-- Rota: `/api/Task/Create`
+- Rota: `/api/task`
 
 Exemplo de request:
 
@@ -94,19 +94,19 @@ Exemplo de request:
 
 2. Obter tarefa por id
 - Metodo: `GET`
-- Rota: `/api/Task/{id}`
+- Rota: `/api/task/{id}`
 
 3. Atualizar tarefa
 - Metodo: `PUT`
-- Rota: `/api/Task/{id}`
+- Rota: `/api/task/{id}`
 
 4. Remover tarefa
 - Metodo: `DELETE`
-- Rota: `/api/Task/{id}`
+- Rota: `/api/task/{id}`
 
 5. Listar tarefas com filtro e paginacao
 - Metodo: `GET`
-- Rota: `/api/Task/List`
+- Rota: `/api/task/list`
 - Query params opcionais:
 	- `status` (string)
 	- `dataVencimento` (DateTime)
@@ -116,7 +116,7 @@ Exemplo de request:
 Exemplo:
 
 ```text
-GET /api/Task/List?status=Pendente&dataVencimento=2026-03-31&page=1&pageSize=10
+GET /api/task/list?status=Pendente&dataVencimento=2026-03-31&page=1&pageSize=10
 ```
 
 ## Contrato de resposta
