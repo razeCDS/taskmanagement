@@ -5,7 +5,7 @@ using TaskManagement.Domain.Interfaces;
 using TaskManagement.Domain.Result;
 using TaskManagement.Infrastructure.Context;
 
-namespace TaskManagement.Infrastructure.Repository.TaskRepository
+namespace TaskManagement.Infrastructure.Repository
 {
     public class TaskRepository : ITaskRepository
     {
