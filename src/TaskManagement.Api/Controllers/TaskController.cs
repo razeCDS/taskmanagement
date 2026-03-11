@@ -7,7 +7,7 @@ using TaskManagement.Domain.Result;
 
 namespace TaskManagement.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/task")]
     [ApiController]
     public class TaskController : ControllerBase
     {
@@ -29,7 +29,7 @@ namespace TaskManagement.Api.Controllers
             return ResultExtensions.ToActionResult(result);
         }
 
-        [HttpPost("Create")]
+        [HttpPost]
         [EndpointSummary("Cria uma nova Task.")]
         [ProducesResponseType(typeof(Result<TaskResponse>), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(Result), StatusCodes.Status404NotFound)]
@@ -59,7 +59,7 @@ namespace TaskManagement.Api.Controllers
             return NoContent();
         }
 
-        [HttpGet("List")]
+        [HttpGet("list")]
         [EndpointSummary("Realiza a listagem de tasks, por filtro de status e data.")]
         [ProducesResponseType(typeof(Result<List<TaskResponse>>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Result), StatusCodes.Status500InternalServerError)]
