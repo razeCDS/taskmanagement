@@ -1,0 +1,210 @@
+{
+  "info": {
+    "name": "Task Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "CreateTask",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "accept",
+            "value": "text/plain",
+            "disabled": false,
+            "type": "default"
+          }
+        ],
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "",
+        "url": {
+          "raw": "https://localhost:7171/api/task",
+          "protocol": "https",
+          "host": [
+            "localhost:7171"
+          ],
+          "path": [
+            "api",
+            "task"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"titulo\": \"Titulo Task\",\n  \"descricao\": \"Descricao Task\",\n  \"dataVencimento\": \"2026-03-10T00:12:00\",\n  \"status\": \"pendente\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "DeleteTask",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "accept",
+            "value": "text/plain",
+            "disabled": false,
+            "type": "default"
+          }
+        ],
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "",
+        "url": {
+          "raw": "https://localhost:7171/api/Task/1",
+          "protocol": "https",
+          "host": [
+            "localhost:7171"
+          ],
+          "path": [
+            "api",
+            "Task",
+            "1"
+          ],
+          "query": [],
+          "variable": []
+        }
+      }
+    },
+    {
+      "name": "GetTask",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "accept",
+            "value": "text/plain",
+            "disabled": false,
+            "type": "default"
+          }
+        ],
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "",
+        "url": {
+          "raw": "https://localhost:7171/api/Task/2",
+          "protocol": "https",
+          "host": [
+            "localhost:7171"
+          ],
+          "path": [
+            "api",
+            "Task",
+            "2"
+          ],
+          "query": [],
+          "variable": []
+        }
+      }
+    },
+    {
+      "name": "ListTask",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "accept",
+            "value": "text/plain",
+            "disabled": false,
+            "type": "default"
+          }
+        ],
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "",
+        "url": {
+          "raw": "https://localhost:7171/api/Task/List/?dataVencimento=2026-03-10T00:12:00&pageSize=10&page=1",
+          "protocol": "https",
+          "host": [
+            "localhost:7171"
+          ],
+          "path": [
+            "api",
+            "Task",
+            "List",
+            ""
+          ],
+          "query": [
+            {
+              "key": "dataVencimento",
+              "value": "2026-03-10T00:12:00"
+            },
+            {
+              "key": "pageSize",
+              "value": "10"
+            },
+            {
+              "key": "page",
+              "value": "1"
+            },
+            {
+              "key": "status",
+              "value": "concluida"
+            }
+          ],
+          "variable": []
+        }
+      }
+    },
+    {
+      "name": "UpdateTask",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "accept",
+            "value": "text/plain",
+            "disabled": false,
+            "type": "default"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "disabled": false,
+            "type": "default"
+          }
+        ],
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "",
+        "url": {
+          "raw": "https://localhost:7171/api/Task/15",
+          "protocol": "https",
+          "host": [
+            "localhost:7171"
+          ],
+          "path": [
+            "api",
+            "Task",
+            "15"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n      \"titulo\": \"Titulo Task Updated\",\n      \"descricao\": \"Descricao Task Updated\",\n      \"dataVencimento\": \"2027-03-10T00:32:46.776Z\",\n      \"status\": \"concluida\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "variable": []
+}

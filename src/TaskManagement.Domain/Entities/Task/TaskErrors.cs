@@ -1,0 +1,12 @@
+﻿using TaskManagement.Domain.Enum;
+using TaskManagement.Domain.Result;
+
+namespace TaskManagement.Domain.Entities.Task
+{
+    public static class TaskErrors
+    {
+        public static Error NotFound() => new("Task não encontrada.", ErrorType.NotFound);
+        public static Error Unexpected(string message) => new(message, ErrorType.Unexpected);
+        public static Error Validation(string message) => new(message, ErrorType.Validation);
+    }
+}
