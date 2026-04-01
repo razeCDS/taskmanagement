@@ -24,6 +24,17 @@ namespace TaskManagement.Api.Extensions
             var configuration = builder.Configuration;
 
             services.AddInfrastructureConfiguration();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", policy =>
+                {
+                    policy
+                        .WithOrigins("http://localhost:4200")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
+
 
             return builder;
         }
